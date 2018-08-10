@@ -1,0 +1,36 @@
+{
+	"name": "screenshots",
+	"version": "1.0",
+	"manifest_version": 2,	// 必须字段，且值为 2
+	"description": "对谷歌浏览器网页进行完整截图和可视区域截图",
+
+	// 在chrome主工具条的地址栏右侧增加一个图标
+	"browser_action": {
+		"default_icon": "screenshot.png",
+		"default_title": "Screenshot of the previous page",
+		"default_popup": "popup.html"
+	},
+
+	// 注入脚本来管理一些任务或者状态，在扩展的整个生命周期都会存在
+	"background": {
+		"scripts": ["js/FileSaver.js", "js/background.js"]
+	},
+
+	// 在当前页面内运行的JavaScript脚本，可以直接获取当前页面的DOM并可以对DOM进行修改
+	"content_scripts": [
+		{
+			"matches": ["*://*/*"],	// 定义在哪些页面注入content_script
+			"js": ["js/jquery.js", "js/content.js"],
+			"run_at": "document_start"	//在document加载时执行该脚本  
+		}
+	],
+
+	// 设置插件的权限
+	"permissions": [
+		"<all_urls>",
+		"tabs",
+		"activeTab"
+	]
+}
+
+// 注：前三个字段为必须字段
