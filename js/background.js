@@ -1,5 +1,7 @@
 var screenshotsType = '';
 
+var dpr = window.devicePixelRatio;
+
 var Screenshot = {
 	canvas: document.createElement("canvas"),
 	y_value: 0,
@@ -54,7 +56,7 @@ var Screenshot = {
 
             webImg.onload = function() {
                 var ctx = canvas.getContext("2d");
-                ctx.drawImage(webImg, 0, 0, width * 2, height * 2, 0, 0, width, height);
+                ctx.drawImage(webImg, 0, 0, width * dpr, height * dpr, 0, 0, width, height);
                 Screenshot.downloadImg();
             };
 
@@ -74,13 +76,13 @@ var Screenshot = {
                 webImg.onload = function() {
                     var ctx = canvas.getContext("2d");
                     var y = Screenshot.clientHeight - Screenshot.scrollHeight % Screenshot.clientHeight;
-                    ctx.drawImage(webImg, 0, 0, width * 2, height * 2, 0, (self.y_value - y) > 0 ? (self.y_value - y) : 0, width, height);
+                    ctx.drawImage(webImg, 0, y, width * dpr, height * dpr, 0, self.y_value, width, height);
                     Screenshot.downloadImg();
                 };
             } else {
                 webImg.onload = function() {
                     var ctx = canvas.getContext("2d");
-                    ctx.drawImage(webImg, 0, 0, width * 2, height * 2, 0, Screenshot.y_value, width, height);
+                    ctx.drawImage(webImg, 0, 0, width * dpr, height * dpr, 0, Screenshot.y_value, width, height);
                     Screenshot.y_value += Screenshot.clientHeight;
                     self.scrollPage(self.tabId, 0, Screenshot.clientHeight);
                 };
