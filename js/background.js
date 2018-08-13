@@ -12,6 +12,8 @@ var Screenshot = {
 		chrome.tabs.sendMessage(Screenshot.tabId, {option: 'getCurrentPageSize'}, self.getPageSizeDone);
 	},
 	getPageSizeDone: function (pageSize) {
+        console.log(pageSize);
+
 		Screenshot.scrollWidth = pageSize.scrollWidth;
         Screenshot.scrollHeight = pageSize.scrollHeight;
         Screenshot.clientWidth = pageSize.clientWidth;
@@ -75,8 +77,11 @@ var Screenshot = {
             if (Screenshot.y_value + Screenshot.clientHeight >= Screenshot.scrollHeight) {
                 webImg.onload = function() {
                     var ctx = canvas.getContext("2d");
-                    var y = Screenshot.clientHeight - Screenshot.scrollHeight % Screenshot.clientHeight;
-                    ctx.drawImage(webImg, 0, y, width * dpr, height * dpr, 0, self.y_value, width, height);
+                    var x = Screenshot.scrollHeight % Screenshot.clientHeight;
+                    var y = Screenshot.clientHeight - x;
+                    console.log('x=' + x);
+                    console.log('y=' + y);
+                    ctx.drawImage(webImg, 0, y * dpr, width * dpr, x * dpr, 0, self.y_value, width, x);
                     Screenshot.downloadImg();
                 };
             } else {
