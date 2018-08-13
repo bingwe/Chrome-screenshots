@@ -52,7 +52,7 @@ var Screenshot = {
         Screenshot.canvas.width = width;
         Screenshot.canvas.height = height;
 
-        chrome.tabs.captureVisibleTab(null, function(img) {
+        chrome.tabs.captureVisibleTab(null, {format: 'jpeg', quality: 100}, function(img) {
             var webImg = new Image();
             var canvas = self.canvas;
 
@@ -70,7 +70,7 @@ var Screenshot = {
         var width = self.clientWidth;
         var height = self.clientHeight;
 
-        chrome.tabs.captureVisibleTab(null, function(img) {
+        chrome.tabs.captureVisibleTab(null, {format: 'jpeg', quality: 100}, function(img) {
             var webImg = new Image();
             var canvas = self.canvas;
 
@@ -100,7 +100,7 @@ var Screenshot = {
 		var canvas = Screenshot.canvas;
 		var date = new Date();
         canvas.toBlob(function(blob) {
-            saveAs(blob, date.getTime() + '.png');
+            saveAs(blob, date.getTime() + '.jpeg');
         });
 	}
 }
